@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pages',
+    'blog',
 ]
 
 MIDDLEWARE = [
@@ -121,4 +122,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = 'staticfiles'
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
+
 
