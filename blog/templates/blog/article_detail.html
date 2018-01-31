@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ object.title }}</title>
+</head>
+<body>
+    <h1>{{ object.title }}</h1>
+    <p>{{ object.body }}</p>
+    <p>Author: {{ object.author }}</p>
+    <p>Published: {{ object.published|date }}</p>
+    <p>Date: {{ now|date }}</p>
+    <p>
+        {{ object.tags.all|join:", " }}
+    </p>
+</body>
+</html>
