@@ -1,18 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Article List</title>
-</head>
-<body>
-    <h1>Article List as at <span>{{ now|date }}</span></h1>
-        <ul>
-        {% for article in object_list %}
-            <li>{{ article.title }} - {{ article.author }}</li>
-        {% empty %}
-            <li>No articles yet.</li>
-        {% endfor %}
-        </ul>
+{% extends 'blog/base.html' %}
 
-</body>
-</html>
+{% block title %}Article List{% endblock %}
+
+{% block content %}
+<h2>Article List as at <span>{{ now|date }}</span></h2>
+    <ul>
+    {% for article in object_list %}
+        <li><a href='{% url "article-detail" article.pk %}'>{{ article.title }} - {{ article.author }}</a></li>
+    {% empty %}
+        <li>No articles yet.</li>
+    {% endfor %}
+    </ul>
+    <ul>
+        <li><a href='{% url "article-create" %}'>NEW ARTICLE</a></li>
+    </ul>
+{% endblock %}

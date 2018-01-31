@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    {% block body %}
+    <div class="container">
+        {% block site_head %}
+        <header>
+            <h1><a href='{% url "home_page" %}'>Soundtemple</a></h1>
+            {% block site_navbar %}
+            <ul>
+                <li><a href='{% url "article-list" %}'>News</a></li>
+                <li><a href='/'>Music</a></li>
+                <li><a href='/' >Tools</a></li>
+                <li><a href='/' >Training</a></li>
+                <li><a href='/' >Shop</a></li>
+            </ul>
+            {% endblock site_navbar %}
+            {% block app_navbar %}
+            {% endblock app_navbar %}
+        </header>
+        {% endblock %}
+
+        {% block content %}{% endblock %}
+
+        {% block site_footer %}
+            {% include "soundtemple/includes/_footer.html" %}
+        {% endblock %}
+
+    </div>
+    {% endblock %}
+</body>
+</html>

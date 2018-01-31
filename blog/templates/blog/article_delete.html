@@ -1,15 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ object.title }}</title>
-</head>
-<body>
-    <form action="" method="post">{% csrf_token %}
-        <p>Are you sure you want to delete "{{ object }}"?</p>
-        <p>by {{ object.author }} </p>
-        <p>Published: {{ object.published }}</p>
+{% extends 'blog/base.html' %}
+
+{% block title %}{{ object.title }}{% endblock %}
+
+{% block content %}
+<form action="" method="post">{% csrf_token %}
+    <p>Are you sure you want to delete "{{ object }}"?</p>
+    <p>by {{ object.author }} </p>
+    <p>Published: {{ object.published }}</p>
     <input type="submit" value="Confirm" />
 </form>
-</body>
-</html>
+ <li><a href='{% url "article-list" %}'>BACK TO ARTICLES</a></li>
+{% endblock %}
