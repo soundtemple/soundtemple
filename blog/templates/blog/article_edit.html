@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ object.title }}</title>
-</head>
-<body>
-    <form action="" method="post">{% csrf_token %}
-        {{ form.as_p }}
-    <input type="submit" value="Update" />
+{% extends 'blog/base.html' %}
+
+{% block title %}{{ object.title }}{% endblock %}
+
+{% block content %}
+<form action="" method="post">{% csrf_token %}
+    {{ form.as_p }}
+<input type="submit" value="Update" />
 </form>
-</body>
-</html>
+<li><a href='{% url "article-list" %}'>BACK TO ARTICLES</a></li>
+{% endblock %}
