@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>New Article</title>
-</head>
-<body>
-    <form action="" method="post">{% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Save" />
-    </form>
-</body>
-</html>
+{% extends 'blog/base.html' %}
+
+{% block title %}New Article{% endblock %}
+
+{% block content %}
+<form action="" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Save" />
+</form>
+<li><a href='{% url "article-list" %}'>BACK TO ARTICLES</a></li>
+{% endblock %}
