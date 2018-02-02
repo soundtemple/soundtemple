@@ -4,14 +4,26 @@
 
 {% block content %}
 <h2>Article List as at <span>{{ now|date }}</span></h2>
+    {% if filtered_by %}
+        <p>Articles filtered by: {{ filtered_by }}</p>
+    {% endif %}
     <ul>
     {% for article in object_list %}
         <li><a href='{% url "article-detail" article.pk %}'>{{ article.title }} - {{ article.author }}</a></li>
     {% empty %}
-        <li>No articles yet.</li>
+        <li>No {{ filtered_by }} articles yet.</li>
     {% endfor %}
     </ul>
     <ul>
         <li><a href='{% url "article-create" %}'>NEW ARTICLE</a></li>
+        {% if filtered_by %}
+            <li><a href='{% url "article-list" %}'>ALL ARTICLES</a></li>
+        {% endif %}
     </ul>
+    <p>Tags:
+        {% for tag in tags.all %}
+            <a href='{% url "tagged-article-list" tag.title %}'>{{ tag.title }}</a>
+        {% endfor %}
+    </p>
+
 {% endblock %}

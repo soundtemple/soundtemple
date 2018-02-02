@@ -4,6 +4,7 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from .models import Comment, Post, Tag
 from django.utils import timezone
 from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 
@@ -35,7 +36,20 @@ class ArticleListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['now'] = timezone.now()
+        context['tags'] = Tag.objects.all()
+        if hasattr(self, 'tag'):
+            context['filtered_by'] = self.tag.title
         return context
+
+
+class TaggedArticleListView(ArticleListView):
+    '''
+    Filter Article list by tag
+    '''
+
+    def get_queryset(self):
+        self.tag = get_object_or_404(Tag, title=self.kwargs['tag'])
+        return Post.objects.filter(tags=self.tag)
 
 
 class ArticleDetailView(DetailView):
