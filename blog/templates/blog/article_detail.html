@@ -19,4 +19,21 @@
         <li><a href='{% url "article-edit" object.pk %}'>EDIT</a></li>
         <li><a href='{% url "article-delete" object.pk %}'>DELETE</a></li>
     </ul>
+    <hr>
+    <a class="btn btn-default" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
+    {% for comment in object.comments.all %}
+        <div class="comment">
+            <div><strong>{{ comment.author }}</strong> posted {{ comment.created_on }}
+                {% if not comment.approved_comment %}
+                    <a class="btn btn-default" href="{% url 'comment_remove' pk=comment.pk %}"><span>REMOVE</span></a>
+                    <a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}"><span>APPROVE</span></a>
+                {% endif %}
+
+            </div>
+            <p>{{ comment.text|linebreaks }}</p>
+            <HR>
+        </div>
+    {% empty %}
+        <p>No comments here yet :(</p>
+    {% endfor %}
 {% endblock %}
