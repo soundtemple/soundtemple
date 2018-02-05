@@ -4,7 +4,8 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from .models import Comment, Post, Tag
 from django.utils import timezone
 from django.urls import reverse_lazy
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render, redirect
+from .forms import CommentForm
 
 # Create your views here.
 
@@ -63,3 +64,27 @@ class ArticleDetailView(DetailView):
         return context
 
 
+def add_comment_to_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.save()
+            return redirect('article-detail', pk=post.pk)
+    else:
+        form = CommentForm()
+    return render(request, 'blog/comment_add.html', {'form': form})
+
+
+def comment_remove(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    comment.delete()
+    return redirect('article-detail', pk=comment.post.pk)
+
+
+def comment_approve(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    comment.approve()
+    return redirect('article-detail', pk=comment.post.pk)
