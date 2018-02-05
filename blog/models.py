@@ -28,15 +28,18 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    name = models.CharField(max_length=42)
-    email = models.EmailField(max_length=75)
-    website = models.URLField(max_length=200, null=True, blank=True)
+    author = models.CharField(max_length=42)
     text = models.TextField()
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
     created_on = models.DateTimeField(auto_now_add=True)
+    approved_comment = models.BooleanField(default=False)
 
     def __str__(self):
         return 'Comment: %s' % self.name
 
     def __unicode__(self):
         return self.text
+
+    def approve(self):
+        self.approved_comment = True
+        self.save()
