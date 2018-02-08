@@ -15,7 +15,11 @@
     {% endfor %}
     </ul>
     <ul>
-        <li><a href='{% url "article-create" %}'>NEW ARTICLE</a></li>
+        {% if user.is_staff %}
+        <li>
+            <a href='{% url "article-create" %}'>NEW ARTICLE</a>
+        </li>
+        {% endif  %}
         {% if filtered_by %}
             <li><a href='{% url "article-list" %}'>ALL ARTICLES</a></li>
         {% endif %}

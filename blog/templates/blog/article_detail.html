@@ -14,17 +14,21 @@
         {% endfor %}
     </p>
     <ul>
-        <li><a href='{% url "article-create" %}'>NEW ARTICLE</a></li>
         <li><a href='{% url "article-list" %}'>ALL ARTICLES</a></li>
-        <li><a href='{% url "article-edit" object.pk %}'>EDIT</a></li>
-        <li><a href='{% url "article-delete" object.pk %}'>DELETE</a></li>
+        {% if user.is_staff %}
+            <li><a href='{% url "article-create" %}'>NEW ARTICLE</a></li>
+            <li><a href='{% url "article-edit" object.pk %}'>EDIT</a></li>
+            <li><a href='{% url "article-delete" object.pk %}'>DELETE</a></li>
+        {% endif %}
     </ul>
     <hr>
-    <a class="btn btn-default" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
+    {% if user.is_authenticated %}
+        <a class="btn btn-default" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
+    {% endif %}
     {% for comment in object.comments.all %}
         <div class="comment">
             <div><strong>{{ comment.author }}</strong> posted {{ comment.created_on }}
-                {% if not comment.approved_comment %}
+                {% if user.is_staff and not comment.approved_comment %}
                     <a class="btn btn-default" href="{% url 'comment_remove' pk=comment.pk %}"><span>REMOVE</span></a>
                     <a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}"><span>APPROVE</span></a>
                 {% endif %}

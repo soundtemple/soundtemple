@@ -17,7 +17,15 @@
                 <li><a href='/' >Tools</a></li>
                 <li><a href='/' >Training</a></li>
                 <li><a href='/' >Shop</a></li>
+                <li>
+                    {% if user.is_authenticated %}
+                        <a href='{% url "logout_user" %}'>Logout {{ user }}</a>
+                    {% else %}
+                        <a href='{% url "login_page" %}'>Login</a>
+                    {% endif %}
+                </li>
             </ul>
+
             {% endblock site_navbar %}
             {% block app_navbar %}
             {% endblock app_navbar %}
