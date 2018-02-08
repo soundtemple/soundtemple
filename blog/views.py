@@ -6,10 +6,13 @@ from django.utils import timezone
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404, render, redirect
 from .forms import CommentForm
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 
-
+@method_decorator(login_required, name='dispatch')
 class ArticleCreateView(CreateView):
 
     model = Post
@@ -17,12 +20,14 @@ class ArticleCreateView(CreateView):
     template_name = 'blog/article_create.html'
 
 
+@method_decorator(login_required, name='dispatch')
 class ArticleUpdateView(UpdateView):
     model = Post
     fields = ['title', 'body', 'author', 'tags']
     template_name = 'blog/article_edit.html'
 
 
+@method_decorator(login_required, name='dispatch')
 class ArticleDeleteView(DeleteView):
     model = Post
     template_name = 'blog/article_delete.html'
@@ -64,6 +69,7 @@ class ArticleDetailView(DetailView):
         return context
 
 
+@login_required
 def add_comment_to_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
@@ -78,12 +84,14 @@ def add_comment_to_post(request, pk):
     return render(request, 'blog/comment_add.html', {'form': form})
 
 
+@login_required
 def comment_remove(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.delete()
     return redirect('article-detail', pk=comment.post.pk)
 
 
+@login_required
 def comment_approve(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.approve()
