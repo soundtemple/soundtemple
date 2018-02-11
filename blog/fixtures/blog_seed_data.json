@@ -1,0 +1,64 @@
+[
+  {
+    "model": "blog.tag",
+    "pk": 1,
+    "fields": {
+    "title": "Python"
+    }
+  },
+  {
+    "model": "blog.tag",
+    "pk": 2,
+    "fields": {
+    "title": "Django"
+    }
+  },
+  {
+    "model": "blog.tag",
+    "pk": 3,
+    "fields": {
+    "title": "Ableton"
+    }
+  },
+  {
+    "model": "blog.tag",
+    "pk": 4,
+    "fields": {
+    "title": "Traktor"
+    }
+  },
+  {
+    "model": "blog.post",
+    "pk": 1,
+    "fields": {
+    "title": "First Django Post",
+    "author": 1,
+    "body": "This is a django python post",
+    "tags": [1,2],
+    "published": "2018-01-16T17:41:28+00:00"
+    }
+  },
+  {
+    "model": "blog.post",
+    "pk": 2,
+    "fields": {
+    "title": "First Python Post",
+    "author": 1,
+    "body": "This is a python only post",
+    "tags": [1,2],
+    "published": "2018-01-16T17:41:28+00:00"
+    }
+  },
+    {
+    "model": "blog.post",
+    "pk": 3,
+    "fields": {
+    "title": "Using Ableton and Traktor",
+    "author": 3,
+    "body": "ABleton and traktor together are awesome",
+    "tags": [3,4],
+    "published": "2018-01-16T17:41:28+00:00"
+    }
+  }
+
+]
