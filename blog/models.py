@@ -16,7 +16,7 @@ class Tag(models.Model):
 class Post(models.Model):
     published = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=255, unique=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     body = models.TextField()
     tags = models.ManyToManyField(Tag, verbose_name='Tags')
 
