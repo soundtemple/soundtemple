@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'blog',
     'soundtemple',
     'auth_user',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [

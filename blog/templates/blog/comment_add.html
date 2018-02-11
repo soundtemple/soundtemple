@@ -1,9 +1,11 @@
 {% extends 'blog/base.html' %}
+{% load widget_tweaks %}
 
 {% block content %}
     <h2>New comment</h2>
     <form method="POST" class="post-form">{% csrf_token %}
-        {{ form.as_p }}
+        <p>{% render_field form.author placeholder="Username" %}</p>
+        <p>{% render_field form.text rows="10" cols="30" placeholder="Have your say!" %}</p>
         <button type="submit" class="save btn btn-default">Send</button>
     </form>
 {% endblock %}

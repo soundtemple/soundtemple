@@ -1,10 +1,14 @@
 {% extends 'blog/base.html' %}
+{% load widget_tweaks %}
 
 {% block title %}New Article{% endblock %}
 
 {% block content %}
 <form action="" method="post">{% csrf_token %}
-    {{ form.as_p }}
+    <p>{% render_field form.title placeholder="Title" %}</p>
+    <p>{% render_field form.body rows="10" cols="30" placeholder="Body" %}</p>
+    <p>{% render_field form.author %}</p>
+    <p>{% render_field form.tags %}</p>
     <input type="submit" value="Save" />
 </form>
 <li><a href='{% url "article-list" %}'>BACK TO ARTICLES</a></li>
