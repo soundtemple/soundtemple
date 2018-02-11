@@ -4,9 +4,9 @@
 
 {% block content %}
 <form action="" method="post">{% csrf_token %}
-    <p>Are you sure you want to delete "{{ object }}"?</p>
-    <p>by {{ object.author }} </p>
-    <p>Published: {{ object.published }}</p>
+    <p>Are you sure you want to <span>DELETE</span> "<strong>{{ object.title }}</strong>"?</p>
+    <p>by <strong>{{ object.author }}</strong></p>
+    <p>Published: <strong>{{ object.published|date }}</strong></p>
     <input type="submit" value="Confirm" />
 </form>
  <li><a href='{% url "article-list" %}'>BACK TO ARTICLES</a></li>
