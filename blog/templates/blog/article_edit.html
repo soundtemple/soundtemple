@@ -7,7 +7,6 @@
 <form action="" method="post">{% csrf_token %}
     <p>{% render_field form.title placeholder="Title" %}</p>
     <p>{% render_field form.body rows="10" cols="30" placeholder="Body" %}</p>
-    <p>{% render_field form.author %}</p>
     <p>{% render_field form.tags %}</p>
 <input type="submit" value="Update" />
 </form>
