@@ -1,4 +1,4 @@
-{% extends 'pages/base.html' %}
+{% extends '../base.html' %}
 
 {% block title %}Login{% endblock %}
 
@@ -11,23 +11,26 @@
 
     <form id="login-form" method="post"
                   action="{% url 'login_user' %}">
-                {% csrf_token %}
-                <table class="table">
-                    <tr>
-                        <td><label for="id_username">Username</label></td>
-                        <td><input id="id_username" name="username"
-                                   type="text" class="form-control"></td>
-                    </tr>
-                    <tr>
-                        <td><label for="id_password">Password</label></td>
-                        <td><input id="id_password" name="password"
-                                   type="password" class="form-control"></td>
-                    </tr>
-                </table>
+        {% csrf_token %}
+        <table class="table">
+            <tr>
+                <td><label for="id_username">Username</label></td>
+                <td><input id="id_username" name="username"
+                           type="text" class="form-control"></td>
+            </tr>
+            <tr>
+                <td><label for="id_password">Password</label></td>
+                <td><input id="id_password" name="password"
+                           type="password" class="form-control"></td>
+            </tr>
+        </table>
 
-                <input type="submit" value="Login"
-                       class="btn btn-primary pull-right" />
-                <input type="hidden" name="next" value="{{ next }}" />
-            </form>
+        <input type="submit" value="Login"
+               class="btn btn-primary pull-right" />
+        <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+
+    <a href="{% url 'password_reset' %}">Forgot password</a>
+    <a href="{% url 'signup' %}">Register</a>
 
 {% endblock %}
