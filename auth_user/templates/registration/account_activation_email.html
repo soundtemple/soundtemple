@@ -1,0 +1,10 @@
+{% autoescape off %}
+Hi {{ user.username }},
+
+Please click the link below to confirm your registration:
+
+http://{{ domain }}/user/activate/{{ uid }}/{{ token }}
+
+Cheers,
+Tim @ Soundtemple
+{% endautoescape %}

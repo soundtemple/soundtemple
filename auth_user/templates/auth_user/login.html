@@ -30,6 +30,7 @@
         <input type="hidden" name="next" value="{{ next }}" />
     </form>
 
-    <a href="/user/password_reset">Forgot password</a>
+    <a href="{% url 'password_reset' %}">Forgot password</a>
+    <a href="{% url 'signup' %}">Register</a>
 
 {% endblock %}
