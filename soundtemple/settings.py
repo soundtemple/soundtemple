@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'django.contrib.admin',
     'django.contrib.auth',
+    'tinymce',
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only

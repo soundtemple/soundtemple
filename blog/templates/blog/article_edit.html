@@ -5,8 +5,8 @@
 
 {% block content %}
 <form action="" method="post">{% csrf_token %}
-    <p>{% render_field form.title placeholder="Title" %}</p>
-    <p>{% render_field form.body rows="10" cols="30" placeholder="Body" %}</p>
+    <h2>{% render_field form.title placeholder="Title" %}</h2>
+    <p>{% render_field form.body rows="10" cols="30" placeholder="Body" id="html_field" %}</p>
     <p>{% render_field form.tags %}</p>
 <input type="submit" value="Update" />
 </form>
