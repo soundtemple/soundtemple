@@ -23,3 +23,6 @@ urlpatterns += [
     url(r'^account_activation_success/$', views.account_activation_success, name='account_activation_success'),
 ]
 
+urlpatterns += [
+    url(r'^tinymce/', include('tinymce.urls')),
+    ]
