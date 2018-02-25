@@ -4,7 +4,9 @@
 
 {% block content %}
     <h1>{{ object.title }}</h1>
+    {% autoescape off %}
     <p>{{ object.body }}</p>
+    {% endautoescape %}
     <p>Author: {{ object.author }}</p>
     <p>Published: {{ object.published|date }}</p>
     <p>Date: {{ now|date }}</p>

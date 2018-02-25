@@ -1,6 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import User
 from django.urls import reverse
+from tinymce.models import HTMLField
 
 
 # Create your models here.
@@ -17,7 +17,7 @@ class Post(models.Model):
     published = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=255, unique=True)
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
-    body = models.TextField()
+    body = HTMLField()
     tags = models.ManyToManyField(Tag, verbose_name='Tags')
 
     def __str__(self):
