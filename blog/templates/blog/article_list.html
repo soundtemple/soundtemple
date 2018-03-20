@@ -3,31 +3,35 @@
 {% block title %}Article List{% endblock %}
 
 {% block content %}
-<h2>Article List as at <span>{{ now|date }}</span></h2>
-    {% if filtered_by %}
-        <p>Articles filtered by: {{ filtered_by }}</p>
-    {% endif %}
-    <ul>
-    {% for article in object_list %}
-        <li><a href='{% url "article-detail" article.pk %}'>{{ article.title }} - {{ article.author }}</a></li>
-    {% empty %}
-        <li>No {{ filtered_by }} articles yet.</li>
-    {% endfor %}
-    </ul>
-    <ul>
-        {% if user.is_staff %}
-        <li>
-            <a href='{% url "article-create" %}'>NEW ARTICLE</a>
-        </li>
-        {% endif  %}
-        {% if filtered_by %}
-            <li><a href='{% url "article-list" %}'>ALL ARTICLES</a></li>
-        {% endif %}
-    </ul>
-    <p>Tags:
-        {% for tag in tags.all %}
-            <a href='{% url "tagged-article-list" tag.title %}'>{{ tag.title }}</a>
+    <div class="mt-3 bg-secondary text-white rounded">
+      <div class="container">
+        <h1 class="display-8 pt-1 pb-3 mb-0">News <span class="h6">as at {{ now|date }}</span></h1>
+      </div>
+    </div>
+    <div class="list-group">
+        {% for article in object_list %}
+            <a href='{% url "article-detail" article.pk %}' class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1">{{ article.title }}</h5>
+                  <small>{{ article.author }}</small>
+                </div>
+                {# <p class="mb-1">{{ article.preview }}</p>#}
+                <small>more...</small>
+          </a>
+        {% empty %}
+            <a href='{% url "article-list" %}' class="list-group-item list-group-item-action flex-column align-items-start active">
+                <div class="d-flex w-100 justify-content-between">
+                  <p class="mb-1">No {{ filtered_by }} articles yet.</p>
+                </div>
+            </a>
         {% endfor %}
-    </p>
+    </div>
+    {% if filtered_by %}
+        <p class="mt-1 pl-3">Articles filtered by: {{ filtered_by }}</p>
+    {% endif %}
+
+
+
+    {% include "blog/includes/_tags.html" %}
 
 {% endblock %}

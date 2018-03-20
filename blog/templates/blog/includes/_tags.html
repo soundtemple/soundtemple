@@ -1,0 +1,18 @@
+<div class="row mt-3">
+    <div class="col">
+        <p class="">Tags:
+        {% for tag in tags.all %}
+            <a href='{% url "tagged-article-list" tag.title %}' class="btn btn-outline-dark btn-sm mb-1">{{ tag.title }}</a>
+        {% endfor %}
+        </p>
+    </div>
+
+    <div class="col text-right">
+        {% if user.is_staff %}
+            <a href='{% url "article-create" %}' class="btn btn-outline-dark btn-sm mb-1">NEW ARTICLE</a>
+        {% endif  %}
+        {% if filtered_by %}
+            <a href='{% url "article-list" %}' class="btn btn-outline-dark btn-sm mb-1">ALL ARTICLES</a>
+        {% endif %}
+    </div>
+</div>

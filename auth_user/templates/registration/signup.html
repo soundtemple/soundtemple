@@ -1,21 +1,40 @@
 {% extends '../base.html' %}
 
 {% block content %}
-  <h2>Sign up</h2>
-  <form method="post" action="{% url 'signup' %}">
-    {% csrf_token %}
-    {% for field in form %}
-      <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-        {% if field.help_text %}
-          <small style="color: grey">{{ field.help_text }}</small>
-        {% endif %}
-        {% for error in field.errors %}
-          <p style="color: red">{{ error }}</p>
-        {% endfor %}
-      </p>
-    {% endfor %}
-    <button type="submit">Sign up</button>
-  </form>
+    <div class="mt-3 bg-secondary text-white rounded">
+      <div class="container">
+        <h1 class="display-8 pt-3 pb-3">Sign up</h1>
+      </div>
+    </div>
+    <div class="container w-75">
+        <div class="row">
+            <div class="w-100">
+                <form class="form-horizontal centered" method="post" action="{% url 'signup' %}">{% csrf_token %}
+                    <fieldset>
+                        {% for field in form %}
+                            <div class="control-group">
+                                <label class="control-label mb-0 mt-3">{{ field.label }}</label>
+                                <div class="controls">{{ field }}
+                                       {% if field.errors %}
+                                        <p class="alert alert-danger my-3">
+                                            {% for error in  field.errors %}{{ error|escape }}{% endfor %}
+                                        </p>
+            {#                            {% if field.help_text %}#}
+            {#                                <p class="help-inline"><small>{{ field.help_text|safe }}</small></p>#}
+            {#                            {% endif %}#}
+                                       {% endif %}
+                                </div>
+                            </div>
+
+                        {% endfor %}
+                    </fieldset>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary mt-3" >Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
 {% endblock %}
