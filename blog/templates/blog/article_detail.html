@@ -3,43 +3,69 @@
 {% block title %}{{ object.title }}{% endblock %}
 
 {% block content %}
-    <h1>{{ object.title }}</h1>
-    {% autoescape off %}
-    <p>{{ object.body }}</p>
-    {% endautoescape %}
-    <p>Author: {{ object.author }}</p>
-    <p>Published: {{ object.published|date }}</p>
-    <p>Date: {{ now|date }}</p>
-    <p>Tags:
-        {% for tag in object.tags.all %}
-            <a href='{% url "tagged-article-list" tag.title %}'>{{ tag.title }}</a>
-        {% endfor %}
-    </p>
-    <ul>
-        <li><a href='{% url "article-list" %}'>ALL ARTICLES</a></li>
-        {% if user.is_staff %}
-            <li><a href='{% url "article-create" %}'>NEW ARTICLE</a></li>
-            <li><a href='{% url "article-edit" object.pk %}'>EDIT</a></li>
-            <li><a href='{% url "article-delete" object.pk %}'>DELETE</a></li>
-        {% endif %}
-    </ul>
-    <hr>
-    {% if user.is_authenticated %}
-        <a class="btn btn-default" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
-    {% endif %}
-    {% for comment in object.comments.all %}
-        <div class="comment">
-            <div><strong>{{ comment.author }}</strong> posted {{ comment.created_on }}
-                {% if user.is_staff and not comment.approved_comment %}
-                    <a class="btn btn-default" href="{% url 'comment_remove' pk=comment.pk %}"><span>REMOVE</span></a>
-                    <a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}"><span>APPROVE</span></a>
-                {% endif %}
-
-            </div>
-            <p>{{ comment.text|linebreaks }}</p>
-            <HR>
+    <div class="card my-3">
+      <div class="card-body">
+        <div class="jumbotron jumbotron-fluid">
+          <div class="container">
+            <h1 class="display-4">{{ object.title }}</h1>
+            <p class="lead">We need to add a lead field to the post model.</p>
+          </div>
         </div>
-    {% empty %}
-        <p>No comments here yet :(</p>
-    {% endfor %}
+        {% autoescape off %}
+        <p>{{ object.body }}</p>
+        {% endautoescape %}
+      </div>
+    </div>
+
+
+    <div class="card">
+      <div class="card-body">
+        <p>Author: {{ object.author }}</p>
+        <p>Published: {{ object.published|date }}</p>
+        <p>Tags:
+            {% for tag in object.tags.all %}
+                <a href='{% url "tagged-article-list" tag.title %}' class="btn btn-outline-dark btn-sm">{{ tag.title }}</a>
+            {% endfor %}
+        </p>
+      </div>
+    </div>
+
+
+    <div class="row my-3">
+        <div class="col">
+            <a href='{% url "article-list" %}' class="btn btn-outline-dark btn-sm my-3">ALL ARTICLES</a>
+            {% if user.is_staff %}
+                <a href='{% url "article-create" %}' class="btn btn-outline-dark btn-sm my-3">NEW ARTICLE</a>
+                <a href='{% url "article-edit" object.pk %}' class="btn btn-outline-dark btn-sm my-3">EDIT</a>
+                <a href='{% url "article-delete" object.pk %}' class="btn btn-outline-danger btn-sm my-3">DELETE</a>
+            {% endif  %}
+
+        </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        {% if user.is_authenticated %}
+            <a class="btn btn-outline-dark btn-sm" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
+        {% endif %}
+        {% for comment in object.comments.all %}
+            <div class="comment">
+                <div><strong>{{ comment.author }}</strong> posted {{ comment.created_on }}
+                    {% if user.is_staff and not comment.approved_comment %}
+                        <a class="btn btn-default" href="{% url 'comment_remove' pk=comment.pk %}"><span>REMOVE</span></a>
+                        <a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}"><span>APPROVE</span></a>
+                    {% endif %}
+
+                </div>
+                <p>{{ comment.text|linebreaks }}</p>
+                <HR>
+            </div>
+        {% empty %}
+            <p>No comments here yet :(</p>
+        {% endfor %}
+
+      </div>
+    </div>
+
+
 {% endblock %}
