@@ -7,7 +7,7 @@
 <h2>New article by {{ user }}</h2>
 <form action="" method="post">{% csrf_token %}
     <h2>{% render_field form.title placeholder="Title" %}</h2>
-    <p>{% render_field form.body rows="10" cols="30" placeholder="Body" %}</p>
+    <p>{% render_field form.body rows="10" cols="30" placeholder="Body" id="html_field" %}</p>
     <p>{% render_field form.tags %}</p>
     <p>{% render_field form.author %}</p>
     <input type="submit" value="Save" />
