@@ -2,10 +2,25 @@
 {% load widget_tweaks %}
 
 {% block content %}
-    <h2>New comment</h2>
-    <form method="POST" class="post-form">{% csrf_token %}
-        <p>{% render_field form.author placeholder="Username" %}</p>
-        <p>{% render_field form.text rows="10" cols="30" placeholder="Have your say!" %}</p>
-        <button type="submit" class="save btn btn-default">Send</button>
-    </form>
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2>New comment</h2>
+        <form method="POST" class="post-form" novalidate>{% csrf_token %}
+            <p>{% render_field form.author placeholder="Username" %}</p>
+            <p>{% render_field form.text rows="10" cols="30" placeholder="Have your say!" %}</p>
+            <div class="row my-3">
+                <div class="col">
+                    <button type="submit" class="save btn btn-outline-dark btn-sm">SAVE</button>
+                </div>
+                <div class="col">
+                    <p class="text-right">
+                        <a href='{% url "article-list" %}' class="btn btn-outline-danger btn-sm">CANCEL</a>
+                    </p>
+                </div>
+            </div>
+
+        </form>
+      </div>
+    </div>
+
 {% endblock %}

@@ -5,10 +5,28 @@
 
 {% block content %}
 <form action="" method="post">{% csrf_token %}
+<div class="card">
+  <div class="card-body">
     <h2>{% render_field form.title placeholder="Title" %}</h2>
     <p>{% render_field form.body rows="10" cols="30" placeholder="Body" id="html_field" %}</p>
     <p>{% render_field form.tags %}</p>
-<input type="submit" value="Update" />
+  </div>
+</div>
+
+    <div class="row my-3">
+        <div class="col">
+            <input class="btn btn-outline-dark btn-sm" type="submit" value="UPDATE" />
+        </div>
+        <div class="col">
+            <p class="text-right">
+                <a href='{% url "article-list" %}' class="btn btn-outline-danger btn-sm">CANCEL</a>
+            </p>
+        </div>
+    </div>
+
 </form>
-<li><a href='{% url "article-list" %}'>BACK TO ARTICLES</a></li>
+
+
+
+
 {% endblock %}

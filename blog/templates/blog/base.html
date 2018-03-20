@@ -1,12 +1,9 @@
 {% extends 'soundtemple/base.html' %}
 
-{% block app_navbar %}
-    <div><h3>Blog navigation</h3></div>
-{% endblock app_navbar %}
 {% block styles %}
   <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=yc7n1w2y1k3g9l54059zsrsbdjhl7mbeadcqjg10pyuxamqa"></script>
   <script>tinymce.init({
-        selector: 'textarea',
+        selector: "#html_field",
         height: 500,
         menubar: false,
         plugins: [
