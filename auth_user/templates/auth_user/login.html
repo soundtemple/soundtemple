@@ -8,42 +8,6 @@
         <h1 class="display-8 pt-3 pb-3">Login</h1>
       </div>
     </div>
-
-    <div class="container w-75">
-        <div class="row">
-            <div class="w-100">
-
-        {% if form.errors %}
-            <div class="alert alert-danger" role="alert">
-              <strong>Your username and password didn't match.</strong> Please try again.
-            </div>
-        {% endif %}
-
-        <form id="login-form" method="post"
-                      action="{% url 'login_user' %}">
-            {% csrf_token %}
-                    <label for="id_username">Username</label>
-                    <input id="id_username" name="username"
-                               type="text" class="form-control">
-                    <label for="id_password">Password</label>
-                    <input id="id_password" name="password"
-                               type="password" class="form-control">
-                    <input type="submit" value="Login"
-                               class="btn btn-primary my-3" />
-                    <input type="hidden" name="next" value="{{ next }}" />
-
-                </tr>
-
-
-        </form>
-                <div class="">
-                    <a class="btn btn-outline-light btn-sm text-muted" href="{% url 'password_reset' %}">Forgot password</a>
-                    <a class="btn btn-outline-light btn-sm text-muted" href="{% url 'signup' %}">Register</a>
-                </div>
-
-
-            </div>
-        </div>
-    </div>
+    {% include "auth_user/includes/_login_form.html" %}
 
 {% endblock %}
