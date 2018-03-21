@@ -22,6 +22,10 @@ label {
     margin-bottom: 0;
 }
 
+.list-group-item {
+    z-index: -1;
+}
+
 .list-group-item-dark {
     background-color: #343a40!important;
     border: none;
@@ -30,4 +34,3 @@ label {
 .card-header {
     background-color: #6c757d;
 }
-
