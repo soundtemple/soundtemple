@@ -23,3 +23,5 @@ def training(request):
     return render(request, 'pages/training.html', {})
 
 
+def coming_soon(request):
+    return render(request, 'pages/coming_soon.html', {})
