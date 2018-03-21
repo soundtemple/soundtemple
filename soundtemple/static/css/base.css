@@ -22,8 +22,8 @@ label {
     margin-bottom: 0;
 }
 
-.list-group-item {
-    z-index: -1;
+.navbar {
+    z-index: 1000;
 }
 
 .list-group-item-dark {
