@@ -20,8 +20,14 @@ decorators = [login_required, staff_member_required]
 class ArticleCreateView(CreateView):
 
     model = Post
-    fields = ['title', 'body', 'tags']
+    fields = ['title', 'subtitle', 'body', 'tags']
     template_name = 'blog/article_create.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['now'] = timezone.now()
+        context['tags'] = Tag.objects.all()
+        return context
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -31,8 +37,14 @@ class ArticleCreateView(CreateView):
 @method_decorator(decorators, name='dispatch')
 class ArticleUpdateView(UpdateView):
     model = Post
-    fields = ['title', 'body', 'tags']
+    fields = ['title', 'subtitle', 'body', 'tags']
     template_name = 'blog/article_edit.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['now'] = timezone.now()
+        context['tags'] = Tag.objects.all()
+        return context
 
     def form_valid(self, form):
         form.instance.author = self.request.user
