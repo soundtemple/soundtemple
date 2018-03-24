@@ -1,4 +1,6 @@
 {% extends 'blog/base.html' %}
+{% load widget_tweaks %}
+
 
 {% block title %}{{ object.title }}{% endblock %}
 
@@ -45,15 +47,18 @@
 
     <div class="card mb-3">
       <div class="card-body">
+      <h5 class="card-title">Comments
         {% if user.is_authenticated %}
             <a class="btn btn-outline-dark btn-sm" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
         {% endif %}
-        {% for comment in object.comments.all %}
+      </h5>
+
+        {% for comment in object.comments.all|dictsortreversed:"created_on" %}
             <div class="comment">
-                <div><strong>{{ comment.author }}</strong> posted {{ comment.created_on }}
+                <div><strong>{{ comment.user }}</strong> posted {{ comment.created_on }}
                     {% if user.is_staff and not comment.approved_comment %}
-                        <a class="btn btn-default" href="{% url 'comment_remove' pk=comment.pk %}"><span>REMOVE</span></a>
-                        <a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}"><span>APPROVE</span></a>
+                        <a class="btn btn-outline-danger btn-sm" href="{% url 'comment_remove' pk=comment.pk %}"><span>REMOVE</span></a>
+                        <a class="btn btn-outline-dark btn-sm" href="{% url 'comment_approve' pk=comment.pk %}"><span>APPROVE</span></a>
                     {% endif %}
 
                 </div>
@@ -66,6 +71,5 @@
 
       </div>
     </div>
-
 
 {% endblock %}
