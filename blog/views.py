@@ -74,6 +74,7 @@ class ArticleDetailView(DetailView):
 
     model = Post
     template_name = 'blog/article_detail.html'
+    form = CommentForm()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -81,19 +82,28 @@ class ArticleDetailView(DetailView):
         return context
 
 
-@login_required
-def add_comment_to_post(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    if request.method == "POST":
+@method_decorator(login_required, name='dispatch')
+class AddCommentToPost(CreateView):
+
+    def get(self, request, pk):
+        form = CommentForm(initial={'user':request.user})
+        post = get_object_or_404(Post, pk=pk)
+        context = {'form': form, 'post': post}
+
+        return render(request, 'blog/comment_add.html', context=context)
+
+    def post(self, request, pk):
+        post = get_object_or_404(Post, pk=pk)
+
         form = CommentForm(request.POST)
+        form.instance.user = self.request.user
+
         if form.is_valid():
             comment = form.save(commit=False)
             comment.post = post
             comment.save()
             return redirect('article-detail', pk=post.pk)
-    else:
-        form = CommentForm()
-    return render(request, 'blog/comment_add.html', {'form': form})
+
 
 
 @staff_member_required
