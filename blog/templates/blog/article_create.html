@@ -4,13 +4,43 @@
 {% block title %}New Article{% endblock %}
 
 {% block content %}
-<h2>New article by {{ user }}</h2>
-<form action="" method="post">{% csrf_token %}
-    <h2>{% render_field form.title placeholder="Title" %}</h2>
-    <p>{% render_field form.body rows="10" cols="30" placeholder="Body" id="html_field" %}</p>
-    <p>{% render_field form.tags %}</p>
-    <p>{% render_field form.author %}</p>
-    <input type="submit" value="Save" />
-</form>
-<li><a href='{% url "article-list" %}'>BACK TO ARTICLES</a></li>
+<div class="card my-3">
+  <div class="card-body">
+    <form action="" method="post">{% csrf_token %}
+        <div class="jumbotron jumbotron-fluid bg-light mb-0 py-3">
+          <div class="container">
+            <h1 class="">{% render_field form.title class+="bg-light mb-0 display-4" placeholder="Title" %}</h1>
+            <p class="font-weight-bold">{% render_field form.subtitle class+="bg-light px-1 font-weight-bold font-italic" placeholder="Subtitle" %}</p>
+          </div>
+        </div>
+
+        <div class="container">
+          <div class="row">
+                <div class="col">
+                    <p class="font-weight-bold">by {{ user }}</p>
+                </div>
+                <div class="row mr-3 font-weight-bold">
+                    <p>{{ now|date:"l, dS F Y" }}</p>
+                </div>
+          </div>
+        </div>
+        <p>{% render_field form.body rows="10" cols="30" placeholder="Body" id="html_field" %}</p>
+        <p>{% render_field form.author %}</p>
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <p>{% render_field form.tags class+="custom-select" %}</p>
+            </div>
+            <div class="col">
+              <input class="btn btn-outline-success btn-sm" type="submit" value="SAVE" />
+            </div>
+          </div>
+        </div>
+    </form>
+  </div>
+</div>
+<div class="mb-3">
+    <a class="btn btn-outline-danger btn-sm" href='{% url "article-list" %}'>CANCEL</a>
+</div>
+
 {% endblock %}
