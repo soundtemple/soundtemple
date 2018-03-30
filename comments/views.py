@@ -1,9 +1,10 @@
 from django.apps import apps
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.decorators import method_decorator
-from django.views.generic.edit import CreateView, DeleteView
+from django.views.generic.edit import CreateView
 
 from .forms import CommentForm
 from .models import Comment
@@ -51,14 +52,16 @@ class AddPostComment(CreateView):
 def comment_remove(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.delete()
-    return redirect('article-detail', pk=comment.post.pk)
+    next_page = request.GET['next']
+    return HttpResponseRedirect(next_page)
 
 
 @staff_member_required
 def comment_approve(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.approve()
-    return redirect('article-detail', pk=comment.post.pk)
+    next_page = request.GET['next']
+    return HttpResponseRedirect(next_page)
 
 
 
