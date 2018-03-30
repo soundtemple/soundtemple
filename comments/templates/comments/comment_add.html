@@ -1,0 +1,27 @@
+{% extends 'comments/base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}Soundtemple{% endblock %}
+
+{% block content %}
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2>New {{ comment_type }}</h2>
+        <form method="POST" class="post-form form-group" novalidate>{% csrf_token %}
+            <p>{% render_field form.text class+="form-control form-control-lg" placeholder="Have your say!" %}</p>
+            <div class="row my-3">
+                <div class="col">
+                    <button type="submit" class="save btn btn-outline-dark btn-sm">SAVE</button>
+                </div>
+                <div class="col">
+                </div>
+            </div>
+
+        </form>
+        <p class="text-left">
+            <button value="Previous Page" onClick="javascript:history.go(-1);" class="btn btn-outline-danger btn-sm">CANCEL</button>
+        </p>
+      </div>
+    </div>
+
+{% endblock %}

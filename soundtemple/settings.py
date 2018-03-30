@@ -35,14 +35,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'soundtemple',
     'pages',
     'blog',
-    'soundtemple',
     'auth_user',
+    'comments',
     'widget_tweaks',
     'django.contrib.admin',
     'django.contrib.auth',
     'tinymce',
+    'django_extensions',
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
@@ -132,4 +134,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
+
+SHELL_PLUS = "ipython"
 

@@ -1,15 +1,15 @@
-from django.views.generic.detail import DetailView
-from django.views.generic.list import ListView
-from django.views.generic.edit import CreateView, DeleteView, UpdateView
-from .models import Comment, Post, Tag
-from django.utils import timezone
-from django.urls import reverse_lazy
-from django.shortcuts import get_object_or_404, render, redirect
-from .forms import CommentForm
-from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required
+from django.apps import apps
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
+from django.urls import reverse_lazy
+from django.utils import timezone
+from django.utils.decorators import method_decorator
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.generic.list import ListView
 
+from .models import Post, Tag
 
 decorators = [login_required, staff_member_required]
 
@@ -86,47 +86,11 @@ class ArticleDetailView(DetailView):
 
     model = Post
     template_name = 'blog/article_detail.html'
-    form = CommentForm()
 
     def get_context_data(self, **kwargs):
+        comments_model = apps.get_model('comments', 'Comment')
         context = super().get_context_data(**kwargs)
         context['now'] = timezone.now()
+        context['comments'] = comments_model.objects.filter(category=comments_model.COMMENT_TYPES[0][0], post=context['post'].pk)
         return context
 
-
-@method_decorator(login_required, name='dispatch')
-class AddCommentToPost(CreateView):
-
-    def get(self, request, pk):
-        form = CommentForm(initial={'user':request.user})
-        post = get_object_or_404(Post, pk=pk)
-        context = {'form': form, 'post': post}
-
-        return render(request, 'blog/comment_add.html', context=context)
-
-    def post(self, request, pk):
-        post = get_object_or_404(Post, pk=pk)
-
-        form = CommentForm(request.POST)
-        form.instance.user = self.request.user
-
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.post = post
-            comment.save()
-            return redirect('article-detail', pk=post.pk)
-
-
-
-@staff_member_required
-def comment_remove(request, pk):
-    comment = get_object_or_404(Comment, pk=pk)
-    comment.delete()
-    return redirect('article-detail', pk=comment.post.pk)
-
-
-@staff_member_required
-def comment_approve(request, pk):
-    comment = get_object_or_404(Comment, pk=pk)
-    comment.approve()
-    return redirect('article-detail', pk=comment.post.pk)
