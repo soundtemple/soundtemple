@@ -56,8 +56,8 @@
             <div class="comment">
                 <div><strong>{{ comment.user }}</strong> said on {{ comment.created_on }}
                     {% if user.is_staff and not comment.approved_comment %}
-                        <a class="btn btn-outline-danger btn-sm" href="{% url 'comment_remove' pk=comment.pk %}?next={{ request.path }}"><span>REMOVE</span></a>
-                        <a class="btn btn-outline-dark btn-sm" href="{% url 'comment_approve' pk=comment.pk %}?next={{ request.path }}"><span>APPROVE</span></a>
+                        <a class="btn btn-outline-danger btn-sm" href="{% url 'comment_delete' pk=comment.pk %}"><span>DELETE</span></a>
+                        <a class="btn btn-outline-dark btn-sm" href="{% url 'comment_approve' pk=comment.pk %}"><span>APPROVE</span></a>
                     {% endif %}
 
                 </div>

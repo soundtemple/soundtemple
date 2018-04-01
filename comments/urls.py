@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns = [
     path('add/to_post/<int:pk>', views.AddPostComment.as_view(), name='post_comment_add'),
+    # path('approve/<int:pk>', views.CommentApprove.as_view(), name='comment_approve'),
     path('approve/<int:pk>', views.comment_approve, name='comment_approve'),
-    path('remove/<int:pk>', views.comment_remove, name='comment_remove'),
+    path('delete/<int:pk>', views.CommentDelete.as_view(), name='comment_delete'),
 ]

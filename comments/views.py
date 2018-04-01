@@ -1,15 +1,28 @@
 from django.apps import apps
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.utils.decorators import method_decorator
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import BaseUpdateView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.http import HttpResponseRedirect
 
 from .forms import CommentForm
 from .models import Comment
 
 decorators = [login_required, staff_member_required]
+
+
+class CommentMixin(object):
+    model = Comment
+
+    def get_context_data(self, **kwargs):
+        kwargs.update({'object_name': 'Comment'})
+        return kwargs
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(CommentMixin, self).dispatch(*args, **kwargs)
 
 
 @method_decorator(login_required, name='dispatch')
@@ -48,20 +61,52 @@ class AddPostComment(CreateView):
             return redirect('article-detail', pk=pk)
 
 
-@staff_member_required
-def comment_remove(request, pk):
-    comment = get_object_or_404(Comment, pk=pk)
-    comment.delete()
-    next_page = request.GET['next']
-    return HttpResponseRedirect(next_page)
+@method_decorator(decorators, name='dispatch')
+class CommentDelete(CommentMixin, DeleteView):
+    template_name = 'comments/comment_confirm_delete.html'
+
+    def get_success_url(self):
+
+        obj_to_delete = self.get_object()
+
+        if obj_to_delete.category == Comment.COMMENT_TYPES[0][0]:
+            # Delete News POST article
+            return reverse('article-detail', args=(obj_to_delete.post.id,))
+
+        else:
+            return reverse('home_page')
+
+
+@method_decorator(decorators, name='dispatch')
+class CommentApprove(CommentMixin, UpdateView):
+
+    def post(self, request, *args, **kwargs):
+        comment = self.get_object()
+        comment.approve()
+        return super(BaseUpdateView, self).post(request, *args, **kwargs)
+
+    def get_success_url(self):
+
+        obj_to_delete = self.get_object()
+
+        if obj_to_delete.category == Comment.COMMENT_TYPES[0][0]:
+            # Delete News POST article
+            return reverse('article-detail', args=(obj_to_delete.post.id,))
+
+        else:
+            return reverse('home_page')
 
 
 @staff_member_required
 def comment_approve(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.approve()
-    next_page = request.GET['next']
-    return HttpResponseRedirect(next_page)
+
+    if comment.category == Comment.COMMENT_TYPES[0][0]:
+        # Delete News POST article
+        return HttpResponseRedirect(reverse('article-detail', args=(comment.post.id,)))
+    else:
+        return HttpResponseRedirect(reverse('home_page'))
 
 
 
