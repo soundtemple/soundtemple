@@ -1,11 +1,13 @@
 from django.apps import apps
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.utils.decorators import method_decorator
 from django.views.generic.edit import BaseUpdateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
-from django.http import HttpResponseRedirect
+from django.views.generic.list import ListView
+from django.utils import timezone
 
 from .forms import CommentForm
 from .models import Comment
@@ -69,25 +71,8 @@ class CommentDelete(CommentMixin, DeleteView):
 
         obj_to_delete = self.get_object()
 
-        if obj_to_delete.category == Comment.COMMENT_TYPES[0][0]:
-            # Delete News POST article
-            return reverse('article-detail', args=(obj_to_delete.post.id,))
-
-        else:
-            return reverse('home_page')
-
-
-@method_decorator(decorators, name='dispatch')
-class CommentApprove(CommentMixin, UpdateView):
-
-    def post(self, request, *args, **kwargs):
-        comment = self.get_object()
-        comment.approve()
-        return super(BaseUpdateView, self).post(request, *args, **kwargs)
-
-    def get_success_url(self):
-
-        obj_to_delete = self.get_object()
+        if 'path' in self.request.GET and self.request.GET['path'] == 'list':
+            return reverse('comment-list')
 
         if obj_to_delete.category == Comment.COMMENT_TYPES[0][0]:
             # Delete News POST article
@@ -102,13 +87,25 @@ def comment_approve(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.approve()
 
+    if 'path' in request.GET and request.GET['path'] == 'list':
+        return HttpResponseRedirect(reverse('comment-list'))
+
     if comment.category == Comment.COMMENT_TYPES[0][0]:
-        # Delete News POST article
+        # Approve News POST article
         return HttpResponseRedirect(reverse('article-detail', args=(comment.post.id,)))
     else:
         return HttpResponseRedirect(reverse('home_page'))
 
 
+@method_decorator(decorators, name='dispatch')
+class CommentsListView(ListView):
 
+    model = Comment
+    template_name = 'comments/comment_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['now'] = timezone.now()
+        return context
 
 
