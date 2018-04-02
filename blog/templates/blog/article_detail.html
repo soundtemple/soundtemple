@@ -59,7 +59,6 @@
                         <a class="btn btn-outline-danger btn-sm" href="{% url 'comment_delete' pk=comment.pk %}"><span>DELETE</span></a>
                         <a class="btn btn-outline-dark btn-sm" href="{% url 'comment_approve' pk=comment.pk %}"><span>APPROVE</span></a>
                     {% endif %}
-
                 </div>
                 <p>{{ comment.text|linebreaks }}</p>
                 <HR>

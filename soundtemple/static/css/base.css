@@ -34,3 +34,23 @@ label {
 .card-header {
     background-color: #6c757d;
 }
+
+.table td,
+.table th {
+    border: none;
+}
+
+a {
+    color: #343a40;
+}
+
+a.page-link {
+    background-color: #f8f9fa;
+    color: #6c757d;
+}
+
+
+.page-item.active .page-link {
+    /*background-color: aquamarine;*/
+    /*border-color: aquamarine;*/
+}
