@@ -10,7 +10,7 @@ class Comment(models.Model):
     )
 
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='comment_user')
-    text = models.TextField()
+    text = models.TextField(max_length=1020)
     created_on = models.DateTimeField(auto_now_add=True)
     approved_comment = models.BooleanField(default=False)
     category = models.CharField(max_length=24, choices=COMMENT_TYPES)
