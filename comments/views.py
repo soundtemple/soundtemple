@@ -144,10 +144,10 @@ class TestimonialList(ListView):
 @staff_member_required
 def comment_feature_toggle(request, pk, feature):
     comment = get_object_or_404(Comment, pk=pk)
-    if feature == 'True':
+    if feature == 'True' and comment.category == comment.COMMENT_TYPES[3][0]:
         comment.featured = True
         comment.feature()
-    elif feature == 'False':
+    elif feature == 'False' and comment.category == comment.COMMENT_TYPES[3][0]:
         comment.featured = False
         comment.unfeature()
     else:

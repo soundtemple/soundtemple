@@ -15,5 +15,5 @@ def footer_testimonials():
 @register.inclusion_tag('comments/widget_news.html')
 def footer_news():
     Post = apps.get_model('blog', 'Post')
-    featured_posts = Post.objects.filter(featured=True)[:4]
+    featured_posts = Post.objects.order_by('-published')[:5]
     return {'featured_posts': featured_posts}
