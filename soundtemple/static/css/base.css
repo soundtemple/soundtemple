@@ -52,8 +52,10 @@ a.page-link {
     color: #6c757d;
 }
 
+.nounderline{text-decoration: none}
 
-.page-item.active .page-link {
-    /*background-color: aquamarine;*/
-    /*border-color: aquamarine;*/
+/*Footer widget css*/
+#caroFooterTestimonials {
+    min-height: 100%;
 }
+

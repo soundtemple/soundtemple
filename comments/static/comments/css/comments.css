@@ -1,0 +1,7 @@
+.no-underline {
+    text-decoration: none !important;
+}
+
+.no-underline:hover {
+    color: #f8f9fa;
+}

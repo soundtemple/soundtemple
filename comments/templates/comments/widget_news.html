@@ -1,0 +1,11 @@
+{% for article in featured_posts %}
+    <div class="">
+        <a href='{% url "article-detail" article.pk %}' class="list-group-item list-group-item-dark text-light pb-0">
+            <p>{{ article.title }} - <span><small>{{ article.subtitle }}</small></span></p>
+        </a>
+    </div>
+{% endfor %}
+
+
+
+
