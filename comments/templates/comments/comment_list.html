@@ -61,11 +61,13 @@
 
               </td>
               <td>
-                {% if comment.featured %}
-                    <a class="btn btn-outline-danger btn-sm" href="{% url 'comment_feature_toggle' pk=comment.pk feature='False' %}?path=list"><span>REMOVE</span></a>
-                {% else %}
-                    <a class="btn btn-outline-dark btn-sm" href="{% url 'comment_feature_toggle' pk=comment.pk feature='True' %}?path=list"><span>FEATURE</span></a>
-                {% endif %}
+                  {% if comment.category == 'TEST' %}
+                    {% if comment.featured %}
+                        <a class="btn btn-outline-danger btn-sm" href="{% url 'comment_feature_toggle' pk=comment.pk feature='False' %}?path=list"><span>REMOVE</span></a>
+                    {% else %}
+                        <a class="btn btn-outline-dark btn-sm" href="{% url 'comment_feature_toggle' pk=comment.pk feature='True' %}?path=list"><span>FEATURE</span></a>
+                    {% endif %}
+                  {% endif %}
               </td>
               <td>
                 {% if not comment.approved_comment %}
