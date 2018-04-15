@@ -1,33 +1,29 @@
+{% load footer_tags %}
 <footer class="footer bg-dark container-fluid">
     <div class="card bg-dark text-light">
       <div class="card-body">
           <div class="row ">
             <div class="col-lg list-group">
-                <div class="card-header">Links</div>
+                  <div class="card-header">Links</div>
                   <a href='{% url "about" %}' class="list-group-item list-group-item-dark text-light">About</a>
                   <a href='{% url "contact" %}' class="list-group-item list-group-item-dark text-light">Contact</a>
                   <a href='{% url "faqs" %}' class="list-group-item list-group-item-dark text-light">FAQ</a>
-                  <a href='/' class="list-group-item list-group-item-dark text-light">Testimonials</a>
+                  <a href='{% url "testimonial-list" %}' class="list-group-item list-group-item-dark text-light">Testimonials</a>
             </div>
             <div class="col-lg list-group">
-                  <div class="card-header">Testimonials</div>
-                  <div class="card-body">
-                    <p class="card-text">Some good things</p>
-                    <p class="card-text">- John Supporter</p>
-                  </div>
+                <div class="card-header">In the news...</div>
+                    {% footer_news %}
             </div>
             <div class="col-lg list-group">
-                  <div class="card-header">Footer stuff</div>
-                  <div class="card-body">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  </div>
+              <div class="card-header">Testimonials</div>
+                {% footer_testimonials %}
             </div>
           </div>
       </div>
     </div>
-      <div class="row">
-          <div class="card-body">
-            <p class="text-right text-muted">Copyright Soundtemple 2018</p>
-          </div>
+    <div class="row">
+      <div class="card-body">
+        <p class="text-right text-muted">Copyright Soundtemple 2018</p>
       </div>
+    </div>
 </footer>
