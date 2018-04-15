@@ -48,7 +48,7 @@ class AddComment(CreateView):
                 'post': post,
                 'comment_type': Comment.COMMENT_TYPES[0][1],
             })
-        if 'type' in request.GET and request.GET['type'] == 'testimonial':
+        elif 'type' in request.GET and request.GET['type'] == 'testimonial':
             context.update({
                 'comment_type': Comment.COMMENT_TYPES[3][1],
             })
