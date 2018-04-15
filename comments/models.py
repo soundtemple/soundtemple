@@ -14,6 +14,7 @@ class Comment(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     approved_comment = models.BooleanField(default=False)
     category = models.CharField(max_length=24, choices=COMMENT_TYPES)
+    featured = models.BooleanField(default=False)
     post = models.ForeignKey('blog.Post', on_delete=models.CASCADE, related_name='comment_post_id', blank=True, null=True)
 
     # TODO: Add these when product and portfolio apps are created
@@ -28,4 +29,12 @@ class Comment(models.Model):
 
     def approve(self):
         self.approved_comment = True
+        self.save()
+
+    def feature(self):
+        self.featured = True
+        self.save()
+
+    def unfeature(self):
+        self.featured = False
         self.save()
