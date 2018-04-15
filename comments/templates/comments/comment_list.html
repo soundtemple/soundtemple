@@ -1,4 +1,5 @@
 {% extends 'comments/base.html' %}
+{% load split_text %}
 {% block extra_head %}
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.css"/>
 {% endblock %}
@@ -20,6 +21,7 @@
               <th scope="col">Category</th>
               <th scope="col">Location</th>
               <th scope="col">Text</th>
+              <th scope="col">Feature</th>
               <th scope="col">Approve</th>
               <th scope="col">Delete</th>
             </tr>
@@ -30,8 +32,41 @@
               <td>{{ comment.user }}</td>
               <td>{{ comment.created_on|date:"y/m/d" }}</td>
               <td>{{ comment.category }}</td>
-              <td><a href="{% url "article-detail" comment.post.pk %}">{{ comment.post.title }}</a></td>
-              <td>{{ comment.text }}</td>
+              <td>
+                  {% if comment.category == 'POST' %}
+                  <a href="{% url "article-detail" comment.post.pk %}">{{ comment.post.title }}</a>
+                  {% elif comment.category == 'TEST' %}
+                  <a href="{% url "home_page" %}">Testimonials</a>
+                      {# make this go to testimonials list view  #}
+                  {% endif %}
+              </td>
+
+              <td>
+                    {% if comment.featured %}
+                    <span class="badge badge-pill badge-success">Featured</span>
+                    {% endif %}
+                    <span>{{ comment.text|first_words }}</span>
+                    {% if comment.text|last_words %}
+                        <span>
+                            <button class="btn btn-link px-0 py-0" data-toggle="collapse" data-target="#collapse{{ comment.pk }}" aria-expanded="true" aria-controls="collapse{{ comment.pk }}">
+                            ...
+                            </button>
+                        </span>
+                        <span id="collapse{{ comment.pk }}" class="collapse">
+                                {{ comment.text|last_words }}
+                        </span>
+                    {%  endif %}
+
+
+
+              </td>
+              <td>
+                {% if comment.featured %}
+                    <a class="btn btn-outline-danger btn-sm" href="{% url 'comment_feature_toggle' pk=comment.pk feature='False' %}?path=list"><span>REMOVE</span></a>
+                {% else %}
+                    <a class="btn btn-outline-dark btn-sm" href="{% url 'comment_feature_toggle' pk=comment.pk feature='True' %}?path=list"><span>FEATURE</span></a>
+                {% endif %}
+              </td>
               <td>
                 {% if not comment.approved_comment %}
                     <a class="btn btn-outline-dark btn-sm" href="{% url 'comment_approve' pk=comment.pk %}?path=list"><span>APPROVE</span></a>

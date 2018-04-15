@@ -1,0 +1,55 @@
+{% extends 'comments/base.html' %}
+{% load static %}
+{% block extra_head %}
+{% endblock %}
+
+{% block title %}Testimonials{% endblock %}
+{% block content %}
+    <div class="mt-3 bg-secondary text-white rounded">
+      <div class="container d-flex justify-content-between">
+        <div>
+            <h1 class="display-8 pt-1 pb-3 mb-0">Testimonials</h1>
+        </div>
+        <div class="align-middle pt-1">
+            <a class="no-underline" href="{% url 'comment_add' %}?type=testimonial&next={{ request.path }}"><h1>+</h1></a>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3">
+      {% for testimonial in testimonials %}
+      <div class="col-sm-6">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">{{ testimonial.user }} says...</h5>
+            <p class="card-text">{{ testimonial.text }}</p>
+            {% if testimonial.featured and user.is_staff %}
+                <p><span class="badge badge-pill badge-success">Featured</span></p>
+            {% endif  %}
+            <footer class="text-right pr-3 pb-3">
+              <p class="card-text"><small class="text-muted">- {{ testimonial.user }}</small></p>
+            </footer>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      {% if user.is_authenticated %}
+        <div class="col-sm-6">
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title">Submit a testimonial</h5>
+              <p class="card-text">Help me spread the word.</p>
+              <a class="btn btn-dark" href="{% url 'comment_add' %}?type=testimonial&next={{ request.path }}">Submit a testimonial</a>
+              <footer class="text-right pr-3 pb-3">
+                <p class="card-text"><small class="text-muted">- Tim from Soundtemple</small></p>
+              </footer>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+    </div>
+
+
+{% endblock %}
+{% block extra_scripts %}
+{% endblock %}
