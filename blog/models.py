@@ -20,6 +20,7 @@ class Post(models.Model):
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     body = HTMLField()
     tags = models.ManyToManyField(Tag, verbose_name='Tags')
+    featured = models.BooleanField(default=False)
 
     def __str__(self):
         return 'Post: %s' % self.title
