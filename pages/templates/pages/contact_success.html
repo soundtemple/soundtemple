@@ -1,0 +1,28 @@
+{% extends 'pages/base.html' %}
+
+{% block title %}Soundtemple{% endblock %}
+
+{% block app_navbar %}
+{% endblock app_navbar %}
+
+{% block content %}
+<div class="mt-3 bg-secondary text-white rounded">
+  <div class="container">
+    <h1 class="display-8 pt-1 pb-3 mb-0">Contact Soundtemple</h1>
+  </div>
+</div>
+    <div class="card mb-3">
+      <div class="card-body">
+          <p><span class="text-success">Success!</span></p>
+          <p>Your message has been sent. We'll be in touch shortly {{ form_details.name }}.</p>
+          <p>We've sent a copy of your message to {{ form_details.email }}</p>
+      </div>
+      <div class="card-footer px-3 py-3 mb-5 mx-auto" style="width: 80%;">
+          <p class="border-bottom"><samp>From: {{ form_details.email }}</samp></p>
+          <p class="border-bottom"><samp>To: Soundtemple</samp></p>
+          <p class="border-bottom"><samp>Subject: {{ form_details.subject }}</samp></p>
+          <p><samp>{{ form_details.message|linebreaks }}</samp></p>
+      </div>
+    </div>
+
+{% endblock content %}
