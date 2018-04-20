@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="list-group">
-        {% for article in object_list %}
+        {% for article in object_list|dictsortreversed:"published" %}
             <a href='{% url "article-detail" article.pk %}' class="list-group-item list-group-item-action flex-column align-items-start">
               <div class="d-flex justify-content-between">
                 <div class="d-flex w-100 justify-content-start">
@@ -21,11 +21,12 @@
                       <small class="">{{ article.subtitle }}</small>
                   </div>
                 </div>
-                <div>
+                <div class="text-right">
                   <small>{{ article.author }}</small>
+                  <small>{{ article.published|date:"d/m/y" }}</small>
                 </div>
               </div>
-          </a>
+            </a>
         {% empty %}
             <a href='{% url "article-list" %}' class="list-group-item list-group-item-action flex-column align-items-start active">
                 <div class="d-flex w-100 justify-content-between">
