@@ -12,7 +12,6 @@ header {margin-top:-50px; height:50px;}
 
 input {
     -webkit-appearance: meter;
-    height: 50px;
     width: 100%;
     border-radius: 5px;
 }
@@ -20,6 +19,10 @@ input {
 label {
     margin-top: 1em;
     margin-bottom: 0;
+}
+
+.dataTables_length {
+    height: 50px;
 }
 
 .navbar {
@@ -34,3 +37,25 @@ label {
 .card-header {
     background-color: #6c757d;
 }
+
+.table td,
+.table th {
+    border: none;
+}
+
+a {
+    color: #343a40;
+}
+
+a.page-link {
+    background-color: #f8f9fa;
+    color: #6c757d;
+}
+
+.nounderline{text-decoration: none}
+
+/*Footer widget css*/
+#caroFooterTestimonials {
+    min-height: 100%;
+}
+

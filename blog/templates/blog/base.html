@@ -1,6 +1,8 @@
 {% extends 'soundtemple/base.html' %}
+{% load static %}
 
 {% block styles %}
+  <link rel="stylesheet" href="{% static 'blog/css/blog.css' %}">
   <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=yc7n1w2y1k3g9l54059zsrsbdjhl7mbeadcqjg10pyuxamqa"></script>
   <script>tinymce.init({
         selector: "#html_field",

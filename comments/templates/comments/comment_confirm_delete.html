@@ -1,0 +1,27 @@
+{% extends 'comments/base.html' %}
+{% load widget_tweaks %}
+{% block title %}Confirm delete?{% endblock %}
+
+{% block content %}
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="text-danger">DELETE</h2>
+        <p>Delete comment from {{ object.category }}</p>
+        <p><strong>{{ object.post.title }}</strong></p>
+        <form action="" method="post" class="post-form form-group" >
+            {% csrf_token %}
+            <div class="row my-3">
+                <div class="col">
+                    <input class="btn btn-outline-dark btn-sm"
+                           type="button" value="CANCEL"
+                           onclick="window.history.go(-1);"/>
+                </div>
+                <div class="col">
+                    <input class="btn btn-outline-danger btn-sm" type="submit" value="DELETE"/>
+                </div>
+            </div>
+
+        </form>
+      </div>
+    </div>
+{% endblock %}

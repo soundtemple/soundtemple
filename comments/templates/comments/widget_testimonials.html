@@ -1,0 +1,20 @@
+<div id="caroFooterTestimonials" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    {% for testimonial in featured_testimonials %}
+        <li data-target="#caroFooterTestimonials" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %} active{% endif %}"></li>
+    {% endfor %}
+  </ol>
+  <div class="carousel-inner px-1">
+    {% for testimonial in featured_testimonials %}
+        <div class="carousel-item {% if forloop.first %} active{% endif %}">
+            <a href='{% url "testimonial-list" %}' class="list-group-item mt-0 pt-0 px-1 list-group-item-dark text-light">
+               <p class="card-text d-block w-100">{{ testimonial.text|truncatewords:50 }}</p>
+               <p class="card-text d-block w-100">- {{ testimonial.user }}</p>
+            </a>
+        </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+
