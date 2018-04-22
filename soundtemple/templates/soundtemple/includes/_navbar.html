@@ -24,6 +24,11 @@
       <li class="nav-item">
         <a class="nav-link" href='{% url "coming_soon" %}'>Shop</a>
       </li>
+      {% if not user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="modal" data-target="#loginModal">Login</a>
+      </li>
+      {% else %}
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Account
@@ -43,6 +48,7 @@
             {% endif %}
         </div>
       </li>
+      {% endif %}
       {% if user.is_staff %}
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

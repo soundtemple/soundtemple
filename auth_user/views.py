@@ -10,11 +10,14 @@ from django.utils.http import urlsafe_base64_decode
 from .tokens import account_activation_token
 from django.contrib.auth.models import User
 
+
 def login_page(request):
     return render(request, 'auth_user/login.html', {})
 
 
 def login_user(request):
+    if request.method == 'GET':
+        return render(request, 'auth_user/login.html', {})
     username = request.POST['username']
     password = request.POST['password']
     user = authenticate(request, username=username, password=password)
