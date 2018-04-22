@@ -15,6 +15,8 @@ Future scope includes midi based applications including
 
 
 ## Local Development
+Create a file called settings_secret.py next to settings.py
+Update the settings_secret.py file with your details. Refer to settings_secret.example for required info.
 
 ## Front-end build process
 
