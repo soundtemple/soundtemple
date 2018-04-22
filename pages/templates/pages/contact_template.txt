@@ -1,0 +1,21 @@
+Contact Name:
+{{ name }}
+
+Email:
+{{ from_email }}
+
+Mobile:
+{{ mobile }}
+
+Subject:
+{{ subject }}
+
+Content:
+{{ message }}
+
+
+Sent from www.soundtemple.com.au
+
+
+
+

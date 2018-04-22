@@ -1,6 +1,7 @@
 from django.core.mail import BadHeaderError, EmailMessage
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.template.loader import get_template
 
 from .forms import ContactForm
 
@@ -22,15 +23,25 @@ def contact(request):
             name = form.cleaned_data['name']
             subject = form.cleaned_data['subject']
             from_email = form.cleaned_data['email']
-            if form.cleaned_data['mobile']:
-                mobile = form.cleaned_data['email']
-            else:
-                mobile = 'No mobile supplied'
+            mobile = form.cleaned_data['mobile']
             message = form.cleaned_data['message']
+
+            template = get_template('pages/contact_template.txt')
+
+            context = {
+                'name': name,
+                'from_email': from_email,
+                'mobile': mobile,
+                'subject': subject,
+                'message': message,
+            }
+
+            content = template.render(context)
+
             try:
                 email = EmailMessage(
-                                     body=reference + message,
-                                     subject=subject,
+                                     body=content,
+                                     subject='New Sountemple Contact form submission',
                                      from_email=from_email,
                                      to=['info@soundtemple.com.au'],
                                      headers={'Reply-To': from_email},
