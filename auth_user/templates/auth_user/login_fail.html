@@ -8,5 +8,18 @@
         <h1 class="display-8 pt-3 pb-3">Login fail</h1>
       </div>
     </div>
-    <p class="py-3">We couldnt find a user with those credentials.</p>
+    <div class="card mb-3">
+      <div class="card-body">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+            <p class="py-3">There was a problem logging in. Sorry we don't know any more than that.</p>
+        {% endif %}
+      </div>
+    </div>
+
 {% endblock %}
