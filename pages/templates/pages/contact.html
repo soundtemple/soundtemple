@@ -12,26 +12,26 @@
     <h1 class="display-8 pt-1 pb-3 mb-0">Contact Soundtemple</h1>
   </div>
 </div>
-    <div class="card mb-3">
-      <div class="card-body">
-        <form method="POST" class="post-form form-group">{% csrf_token %}
-            <p class="border-bottom">{% render_field form.name class+="form-control form-control-lg"  placeholder="Name" %}</p>
-            <p class="border-bottom">{% render_field form.subject class+="form-control form-control-lg"  placeholder="Subject" %}</p>
-            <p class="border-bottom">{% render_field form.email class+="form-control form-control-lg"  placeholder="Email" %}</p>
-            <p class="border-bottom">{% render_field form.mobile class+="form-control form-control-lg"  placeholder="Mobile" %}</p>
-            <p>{% render_field form.message class+="form-control form-control-lg"  placeholder="Message" %}</p>
-            <div class="row my-3">
-                <div class="col">
-                    <button type="submit" class="save btn btn-outline-dark btn">SEND</button>
-                </div>
-                <div class="col">
-                    <p class="text-right"><small id="chars_left"></small></p>
-                </div>
+<div class="card mb-3">
+  <div class="card-body">
+    <form method="POST" class="post-form form-group">{% csrf_token %}
+        <p class="border-bottom">{% render_field form.name class+="form-control form-control-lg"  placeholder="Name" %}</p>
+        <p class="border-bottom">{% render_field form.subject class+="form-control form-control-lg"  placeholder="Subject" %}</p>
+        <p class="border-bottom">{% render_field form.email class+="form-control form-control-lg"  placeholder="Email" %}</p>
+        <p class="border-bottom">{% render_field form.mobile class+="form-control form-control-lg"  placeholder="Mobile" %}</p>
+        <p>{% render_field form.message class+="form-control form-control-lg"  placeholder="Message" %}</p>
+        <div class="row my-3">
+            <div class="col">
+                <button type="submit" class="save btn btn-outline-dark btn">SEND</button>
             </div>
+            <div class="col">
+                <p class="text-right"><small id="chars_left"></small></p>
+            </div>
+        </div>
 
-        </form>
-      </div>
-    </div>
+    </form>
+  </div>
+</div>
 
 {% endblock %}
 {% block extra_scripts %}
