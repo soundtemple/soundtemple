@@ -23,5 +23,6 @@ urlpatterns = [
     url(r'', include('pages.urls')),
     url(r'news/', include('blog.urls')),
     url(r'user/', include('auth_user.urls')),
-    url(r'comment/', include('comments.urls'))
+    url(r'comment/', include('comments.urls')),
+    url(r'^oauth/', include('social_django.urls', namespace='social')),
 ]

@@ -28,10 +28,15 @@
 
 
     </form>
-            <div class="">
-                <a class="btn btn-outline-light btn-sm text-muted" href="{% url 'password_reset' %}">Forgot password</a>
-                <a class="btn btn-outline-light btn-sm text-muted" href="{% url 'signup' %}">Register</a>
-            </div>
+    <br>
+    <p><strong>-- OR --</strong></p>
+    <a href="{% url 'social:begin' 'github' %}">Login with GitHub</a><br>
+    <a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a>
+
+    <div class="">
+        <a class="btn btn-outline-light btn-sm text-muted" href="{% url 'password_reset' %}">Forgot password</a>
+        <a class="btn btn-outline-light btn-sm text-muted" href="{% url 'signup' %}">Register</a>
+    </div>
 
 
         </div>

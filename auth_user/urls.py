@@ -1,7 +1,10 @@
 from django.conf.urls import url, include
 from django.urls import path
-from . import views
+from django.contrib import admin
 from django.contrib.auth import views as auth_views
+
+from . import views
+
 
 urlpatterns = [
     url(r'^login_page', views.login_page, name='login_page'),
@@ -26,3 +29,12 @@ urlpatterns += [
 urlpatterns += [
     url(r'^tinymce/', include('tinymce.urls')),
     ]
+
+
+# Account management
+urlpatterns = [
+    url(r'^settings/$', views.settings, name='settings'),
+    url(r'^settings/password/$', views.password, name='password'),
+    # profile
+    # downloads
+]
