@@ -32,9 +32,9 @@ urlpatterns += [
 
 
 # Account management
-urlpatterns = [
+urlpatterns += [
     url(r'^settings/$', views.settings, name='settings'),
     url(r'^settings/password/$', views.password, name='password'),
-    # profile
+    url(r'^profile/$', views.update_profile, name='profile'),
     # downloads
 ]

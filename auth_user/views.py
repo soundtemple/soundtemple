@@ -5,14 +5,14 @@ from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib import messages
 
-from .forms import SignUpForm
+from .forms import SignUpForm, ProfileForm
 from .tokens import account_activation_token
 
 from django.contrib.auth.decorators import login_required
@@ -34,7 +34,7 @@ def login_user(request):
         recaptcha_response = request.POST.get('g-recaptcha-response')
         url = 'https://www.google.com/recaptcha/api/siteverify'
         values = {
-            'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+            'secret': settings.conf_settings.GOOGLE_RECAPTCHA_SECRET_KEY,
             'response': recaptcha_response
         }
         data = urllib.parse.urlencode(values).encode()
@@ -58,6 +58,7 @@ def login_user(request):
                 messages.error(request, "We couldn't find a user with those credentials")
                 return render(request, 'auth_user/login_fail.html', {})
 
+
 def logout_user(request):
     logout(request)
     return render(request, 'auth_user/logout.html', {})
@@ -71,7 +72,7 @@ def signup(request):
             recaptcha_response = request.POST.get('g-recaptcha-response')
             url = 'https://www.google.com/recaptcha/api/siteverify'
             values = {
-                'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+                'secret': settings.conf_settings.GOOGLE_RECAPTCHA_SECRET_KEY,
                 'response': recaptcha_response
             }
             data = urllib.parse.urlencode(values).encode()
@@ -141,11 +142,17 @@ def settings(request):
     except UserSocialAuth.DoesNotExist:
         facebook_login = None
 
+    try:
+        google_login = user.social_auth.get(provider='google')
+    except UserSocialAuth.DoesNotExist:
+        google_login = None
+
     can_disconnect = (user.social_auth.count() > 1 or user.has_usable_password())
 
-    return render(request, 'auth_user/settings.html', {
+    return render(request, 'auth_user/social_settings.html', {
         'github_login': github_login,
         'facebook_login': facebook_login,
+        'google_login': google_login,
         'can_disconnect': can_disconnect
     })
 
@@ -168,3 +175,23 @@ def password(request):
     else:
         form = password_form(request.user)
     return render(request, 'auth_user/password.html', {'form': form})
+
+
+@login_required
+def update_profile(request):
+    if request.method == 'POST':
+        user_form = SignUpForm(request.POST, instance=request.user)
+        profile_form = ProfileForm(request.POST, instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return HttpResponseRedirect('/')
+        else:
+            messages.error(request, _('Please correct the error below.'))
+    else:
+        user_form = SignUpForm(instance=request.user)
+        profile_form = ProfileForm(instance=request.user.profile)
+    return render(request, 'auth_user/profile.html', {
+        'user_form': user_form,
+        'profile_form': profile_form
+    })

@@ -1,0 +1,20 @@
+{% extends '../base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<div class="mt-3 bg-secondary text-white rounded">
+  <div class="container">
+    <h1 class="display-8 pt-3 pb-3">Update Profile</h1>
+  </div>
+</div>
+<div class="container">
+    <form method=”post”>
+     {% csrf_token %}
+     {{ user_form.as_p }}
+     {{ profile_form.as_p }}
+     <button type=”submit”>Save changes</button>
+    </form>
+</div>
+
+{% endblock %}

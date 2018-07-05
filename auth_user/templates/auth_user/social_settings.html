@@ -1,0 +1,82 @@
+{% extends '../base.html' %}
+
+{% block title %}Settings{% endblock %}
+
+{% block content %}
+    <div class="mt-3 bg-secondary text-white rounded">
+      <div class="container">
+        <h1 class="display-8 pt-3 pb-3">Account Settings</h1>
+      </div>
+    </div>
+    <div class="container-fluid">
+            <div class="d-block p-2 bg-dark text-white">Social Settings</div>
+        <div class="row mt-2">
+            <div class="col-6">
+              {% if github_login %}
+                {% if can_disconnect %}
+                  <form method="post" action="{% url 'social:disconnect' 'github' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-block btn-social btn-github"><span class="fa fa-github"></span>Disconnect from GitHub</button>
+                  </form>
+                {% else %}
+                  <button type="btn btn-outline-dark btn-sm mb-1" disabled>Disconnect from GitHub</button>
+                  <p style="color: red">You must <a href="{% url 'password' %}">define a password</a> for your account before disconnecting from Github.</p>
+                {% endif %}
+              {% else %}
+                <a class="btn btn-block btn-social btn-github" href="{% url 'social:begin' 'github' %}"><span class="fa fa-github"></span>Connect to GitHub</a>
+              {% endif %}
+            </div>
+            <div class="col">
+                {% if github_login %}
+                    <p class="card-text">Connected as <a href="https://github.com/{{ github_login.extra_data.login }}/" target="_blank">{{ github_login.extra_data.login }}</a></p>
+                {% endif %}
+            </div>
+          </div>
+        <div class="row mt-2">
+            <div class="col-6">
+              {% if facebook_login %}
+                {% if can_disconnect %}
+                  <form method="post" action="{% url 'social:disconnect' 'facebook' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-block btn-social btn-facebook mt-1 mb-1"><span class="fa fa-facebook"></span>Disconnect from Facebook</button>
+                  </form>
+                {% else %}
+                  <button type="button" disabled>Disconnect from Facebook</button>
+                  <p style="color: red">You must <a href="{% url 'password' %}">define a password</a> for your account before disconnecting from Facebook.</p>
+                {% endif %}
+              {% else %}
+                <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-block btn-social btn-facebook mb-1 mt-1"><span class="fa fa-facebook"></span>Connect to Facebook</a>
+              {% endif %}
+            </div>
+            <div class="col">
+                {% if facebook_login %}
+                    <p>Connected as <a href="https://facebook.com/{{ facebook_login.extra_data.id }}/" target="_blank">{{ facebook_login.extra_data.id }}</a></p>
+                {% endif %}
+            </div>
+          </div>
+        <div class="row mt-2">
+            <div class="col-6">
+              {% if google_login %}
+                <p class="card-text">Connected as <a href="https://github.com/{{ google_login.extra_data.login }}/" target="_blank">{{ google_login.extra_data.login }}</a></p>
+                {% if can_disconnect %}
+                  <form method="post" action="{% url 'social:disconnect' 'google' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-block btn-social btn-google mb-1 mt-1"><span class="fa fa-google"></span>Disconnect from Google</button>
+                  </form>
+                {% else %}
+                  <button type="btn btn-outline-dark btn-sm mb-1 mt-1" disabled>Disconnect from Google</button>
+                  <p style="color: red">You must <a href="{% url 'password' %}">define a password</a> for your account before disconnecting from Google.</p>
+                {% endif %}
+              {% else %}
+                <a class="btn btn-block btn-social btn-google mb-1 mt-1" href="{% url 'social:begin' 'google' %}"><span class="fa fa-google"></span>Connect to Google</a>
+              {% endif %}
+            </div>
+          </div>
+    </div>
+
+
+
+
+
+
+{% endblock %}
