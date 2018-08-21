@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="container-fluid">
-            <div class="d-block p-2 bg-dark text-white">Social Settings</div>
+        <div class="d-block p-2 bg-dark text-white">Social Settings</div>
         <div class="row mt-2">
             <div class="col-6">
               {% if github_login %}
@@ -35,6 +35,7 @@
         <div class="row mt-2">
             <div class="col-6">
               {% if facebook_login %}
+                <p>Facebook login exists</p>
                 {% if can_disconnect %}
                   <form method="post" action="{% url 'social:disconnect' 'facebook' %}">
                     {% csrf_token %}
