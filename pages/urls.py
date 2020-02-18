@@ -1,4 +1,6 @@
 from django.conf.urls import url
+from django.urls import path
+
 from . import views
 
 urlpatterns = [
@@ -9,4 +11,5 @@ urlpatterns = [
     url(r'^faqs$', views.faqs, name='faqs'),
     url(r'^training', views.training, name='training'),
     url(r'^coming_soon', views.coming_soon, name='coming_soon'),
+    path('upload/', views.DocumentCreateView.as_view(), name='upload_doc'),
 ]

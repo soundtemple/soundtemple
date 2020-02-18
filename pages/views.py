@@ -3,10 +3,17 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.template.loader import get_template
 
+from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
+from django.utils.decorators import method_decorator
+from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
+
+from .models import Document
+
 from .forms import ContactForm
 
-
-# Create your views here.
+decorators = [login_required, staff_member_required]
 
 
 def home_page(request):
@@ -43,7 +50,7 @@ def contact(request):
                                      body=content,
                                      subject='New Sountemple Contact form submission',
                                      from_email=from_email,
-                                     to=['info@soundtemple.com.au'],
+                                     to=['info@project.com.au'],
                                      headers={'Reply-To': from_email},
                                      cc=[from_email],
                                      )
@@ -74,3 +81,16 @@ def training(request):
 
 def coming_soon(request):
     return render(request, 'pages/coming_soon.html', {})
+
+
+@method_decorator(decorators, name='dispatch')
+class DocumentCreateView(CreateView):
+    model = Document
+    fields = ['upload', ]
+    success_url = reverse_lazy('upload_doc')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        documents = Document.objects.all()
+        context['documents'] = documents
+        return context
