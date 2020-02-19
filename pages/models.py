@@ -1,6 +1,8 @@
 from django.db import models
 
-from soundtemple.project.storage_backends import PrivateMediaStorage
+from project.storage_backends import PrivateMediaStorage
+# import statements are always relative to your manage.py
+
 
 class Document(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True)
