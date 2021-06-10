@@ -12,7 +12,7 @@ configparser==3.5.0
 cookiecutter==1.5.1
 coverage==4.4.1
 decorator==4.0.11
-Django==2.2.10
+Django==2.2.24
 django-bootstrap3==8.2.3
 django-extensions==2.2.6
 django-formtools==2.0
